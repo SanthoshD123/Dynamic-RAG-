@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Query App</title>
+</head>
+<body>
+  <h1>Upload a PDF and Query</h1>
+  <form id="pdfForm">
+    <label for="pdf">Select PDF:</label>
+    <input type="file" id="pdf" name="pdf" accept="application/pdf" required>
+    <br><br>
+    <label for="query">Enter Query:</label>
+    <input type="text" id="query" name="query" placeholder="Type your question...">
+    <br><br>
+    <button type="submit">Submit</button>
+  </form>
+  <pre id="response"></pre>
+
+  <script>
+    document.getElementById('pdfForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(document.getElementById('pdfForm'));
+      try {
+        const response = await fetch('http://localhost:5000/upload', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await response.json();
+        document.getElementById('response').innerText = result.answer || result.error;
+      } catch (error) {
+        document.getElementById('response').innerText = "Error fetching response.";
+      }
+    };
+  </script>
+</body>
+</html>
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>Static PDF Query App</title>-->
+<!--  <style>-->
+<!--    body { font-family: Arial, sans-serif; padding: 20px; }-->
+<!--    #response { margin-top: 20px; padding: 10px; background: #f0f0f0; }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--  <h1>Ask Questions About Static PDF</h1>-->
+<!--  <label for="query">Enter your question:</label><br>-->
+<!--  <input type="text" id="query" style="width: 100%; padding: 8px;" placeholder="Type your question...">-->
+<!--  <button onclick="sendQuery()" style="margin-top: 10px; padding: 10px;">Submit</button>-->
+<!--  <div id="response"></div>-->
+
+<!--  <script>-->
+<!--    function sendQuery() {-->
+<!--      const query = document.getElementById('query').value;-->
+<!--      if (!query) {-->
+<!--        alert("Please enter a question.");-->
+<!--        return;-->
+<!--      }-->
+
+<!--      fetch('http://localhost:5000/query_static', {-->
+<!--        method: 'POST',-->
+<!--        headers: { 'Content-Type': 'application/json' },-->
+<!--        body: JSON.stringify({ query })-->
+<!--      })-->
+<!--      .then(response => response.json())-->
+<!--      .then(data => {-->
+<!--        document.getElementById('response').innerText = data.answer || data.error;-->
+<!--      })-->
+<!--      .catch(error => {-->
+<!--        console.error('Error:', error);-->
+<!--        document.getElementById('response').innerText = "Error fetching the response.";-->
+<!--      });-->
+<!--    }-->
+<!--  </script>-->
+<!--</body>-->
+<!--</html>-->
