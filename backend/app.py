@@ -12,7 +12,7 @@ app.config['UPLOAD_FOLDER'] = './uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_API_KEY = "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"
+GROQ_API_KEY = "key"
 
 
 def extract_pdf_text(file_path):
@@ -75,7 +75,7 @@ if __name__ == '__main__':
 #
 # app = Flask(__name__)
 # GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-# GROQ_API_KEY = "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"
+# GROQ_API_KEY = "key"
 #
 # STATIC_PDF_PATH = os.path.join(app.static_folder, "NIPS-2017-attention-is-all-you-need-Paper.pdf")
 #
