@@ -1,115 +1,244 @@
-# Dynamic RAG: PDF Analyzer
+# 🚀 Dynamic RAG: PDF Analyzer
 
-## Overview
+A powerful **Retrieval-Augmented Generation (RAG) system** that enables intelligent PDF document analysis through natural language queries. Upload any PDF document and ask questions about its content using advanced AI powered by **Groq's Llama 3.3-70B** model.
 
-This project is a **Dynamic Retrieval-Augmented Generation (RAG) system** that allows users to upload PDF documents, extract text from them, and query the extracted content using the **Groq API with Llama 3.3-70B**. The system returns intelligent responses based on user queries.
+## ✨ Features
 
-## Features
+- 📄 **PDF Upload & Analysis** - Extract and analyze text from any PDF document
+- 🤖 **AI-Powered Responses** - Get intelligent answers using Groq's Llama 3.3-70B model
+- 🔍 **Natural Language Queries** - Ask questions in plain English
+- 🌐 **Web Interface** - Clean, simple frontend for easy interaction
+- ⚡ **Fast Processing** - Quick text extraction and response generation
+- 🔒 **Secure File Handling** - Safe file uploads with proper validation
 
-- Upload a PDF and extract its text.
-- Query the extracted text with natural language.
-- Get AI-generated responses using **Groq API**.
-- Supports **CORS** for frontend interaction.
+## 🛠️ Tech Stack
 
-## Technologies Used
+### Backend
+- **Flask** - Python web framework
+- **PyPDF2** - PDF text extraction
+- **Groq API** - LLM-powered responses
+- **Werkzeug** - Secure file handling
+- **Flask-CORS** - Cross-origin request support
 
-- **Flask** (Python backend)
-- **PyPDF2** (PDF text extraction)
-- **Groq API** (LLM-powered responses)
-- **Werkzeug** (Secure file handling)
-- **Flask-CORS** (Cross-origin requests handling)
-- **HTML, JavaScript** (Frontend for uploading and querying PDFs)
+### Frontend
+- **HTML5** - Modern web interface
+- **JavaScript** - Interactive functionality
+- **CSS** - Responsive styling
 
-## Setup & Installation
+## 📋 Prerequisites
 
-### Prerequisites
+Before you begin, ensure you have:
 
-Ensure you have the following installed:
+- **Python 3.7+** installed
+- **pip** package manager
+- **Groq API Key** (sign up at [Groq Console](https://console.groq.com/))
 
-- Python 3.x
-- pip (Python package manager)
+## 🚀 Quick Start
 
-### Clone the Repository
+### 1. Clone the Repository
 
-```sh
+```bash
 git clone https://github.com/your-username/dynamic-rag-pdf.git
 cd dynamic-rag-pdf
 ```
 
-### Install Dependencies
+### 2. Install Dependencies
 
-```sh
+```bash
 pip install flask requests PyPDF2 flask-cors
 ```
 
-### Set Up Environment Variables
+### 3. Configure API Key
 
-Create a `.env` file (or replace in code) and add your **Groq API Key**:
+Open `backend/app.py` and replace the placeholder API key:
 
+```python
+GROQ_API_KEY = "your_actual_groq_api_key_here"
 ```
-GROQ_API_KEY=your_api_key_here
-```
 
-### Run the Application
+> **Note**: For production, use environment variables or a `.env` file to store your API key securely.
 
-```sh
+### 4. Run the Application
+
+```bash
+cd backend
 python app.py
 ```
 
-The server will start on `http://localhost:5000`.
+The server will start at `http://localhost:5000`
 
-## API Endpoints
+### 5. Access the Frontend
 
-### 1. Upload and Query PDF
+Open `frontend/index.html` in your web browser or serve it through a local server.
 
-- **Endpoint:** `/upload`
-- **Method:** `POST`
-- **Parameters:**
-  - `pdf` (File) - PDF document
-  - `query` (String) - User query
-- **Response:**
-  ```json
-  {
-      "answer": "Generated response from Groq API"
-  }
-  ```
+## 📡 API Reference
 
-### 2. Query a Static PDF
+### Upload and Query PDF
 
-- **Endpoint:** `/query_static`
-- **Method:** `POST`
-- **Parameters:**
-  - `query` (String) - User query
-- **Response:**
-  ```json
-  {
-      "answer": "Generated response from static PDF"
-  }
-  ```
+**Endpoint:** `POST /upload`
 
-## Frontend Usage
+**Parameters:**
+- `pdf` (file) - PDF document to analyze
+- `query` (string) - Your question about the document
 
-A simple **HTML & JavaScript frontend** is provided to upload PDFs and send queries.
+**Request Example:**
+```bash
+curl -X POST http://localhost:5000/upload \
+  -F "pdf=@document.pdf" \
+  -F "query=What is the main topic of this document?"
+```
 
-To use it, open `index.html` in a browser and interact with the UI.
+**Response:**
+```json
+{
+  "answer": "The main topic of this document is..."
+}
+```
 
-## Future Improvements
+### Health Check
 
-- Implement authentication for secure access.
-- Add support for multiple file formats (DOCX, TXT, etc.).
-- Improve UI with a modern frontend framework.
+**Endpoint:** `GET /`
 
-## License
+Returns server status confirmation.
 
-This project is **MIT licensed**. Feel free to use and modify it.
+## 💡 Usage Examples
 
-## Contributing
+### Sample Queries
 
-Feel free to submit issues or pull requests to improve this project!
+- **Summarization**: "Summarize this document in 3 key points"
+- **Specific Information**: "What does this document say about artificial intelligence?"
+- **Analysis**: "What are the main conclusions of this research paper?"
+- **Extraction**: "List all the recommendations mentioned in this report"
+
+### Using the Web Interface
+
+1. **Upload PDF**: Click "Select PDF" and choose your document
+2. **Enter Query**: Type your question in the text field
+3. **Submit**: Click "Submit" to get AI-generated response
+4. **View Results**: The answer appears below the form
+
+## 🏗️ Project Structure
+
+```
+dynamic-rag-pdf/
+├── backend/
+│   ├── app.py              # Main Flask application
+│   └── uploads/            # Temporary file storage
+├── frontend/
+│   └── index.html          # Web interface
+├── README.md               # Project documentation
+└── requirements.txt        # Python dependencies (optional)
+```
+
+## ⚙️ Configuration
+
+### Environment Variables
+
+For production deployment, use environment variables:
+
+```bash
+export GROQ_API_KEY="your_api_key_here"
+export FLASK_ENV="production"
+```
+
+### File Upload Limits
+
+The system currently processes the first 2000 characters of extracted text. To modify this:
+
+```python
+# In app.py, line 42
+"content": f"{query}: {text_content[:2000]}"  # Adjust limit here
+```
+
+## 🚀 Deployment
+
+### Local Development
+```bash
+python app.py
+```
+
+### Production (using Gunicorn)
+```bash
+pip install gunicorn
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
+```
+
+### Docker Deployment
+```dockerfile
+FROM python:3.9-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+EXPOSE 5000
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "app:app"]
+```
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**PDF Text Extraction Fails**
+- Ensure the PDF contains extractable text (not just images)
+- Try with a different PDF file
+- Check if the file is corrupted
+
+**API Key Error**
+- Verify your Groq API key is correct
+- Check if you have sufficient API credits
+- Ensure the key has proper permissions
+
+**CORS Issues**
+- Make sure Flask-CORS is installed
+- Check if the frontend is making requests to the correct backend URL
+
+## 🔮 Future Enhancements
+
+- [ ] **Authentication System** - User login and session management
+- [ ] **Multi-format Support** - DOCX, TXT, and other document types
+- [ ] **Vector Database** - Implement proper RAG with embeddings
+- [ ] **Chat History** - Save and retrieve previous conversations
+- [ ] **Batch Processing** - Handle multiple documents simultaneously
+- [ ] **Advanced UI** - Modern React/Vue.js frontend
+- [ ] **Document Chunking** - Better handling of large documents
+- [ ] **Export Results** - Download responses as PDF/DOC
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+
+- Follow PEP 8 style guidelines
+- Add comments for complex logic
+- Include error handling
+- Test with various PDF formats
+- Update documentation for new features
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **Groq** for providing the powerful Llama 3.3-70B model
+- **PyPDF2** community for the PDF processing library
+- **Flask** team for the excellent web framework
+
+## 📧 Contact
+
+**Santhosh D**
+- GitHub: [@your-username](https://github.com/your-username)
+- Email: your.email@example.com
 
 ---
 
-### Author
-
-Santhosh D
-
+<div align="center">
+<p>If you found this project helpful, please consider giving it a ⭐!</p>
+</div>
