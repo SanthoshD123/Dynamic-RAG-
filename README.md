@@ -231,12 +231,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **PyPDF2** community for the PDF processing library
 - **Flask** team for the excellent web framework
 
-## 📧 Contact
-
-**Santhosh D**
-- GitHub: [@your-username](https://github.com/your-username)
-- Email: your.email@example.com
-
 ---
 
 <div align="center">
